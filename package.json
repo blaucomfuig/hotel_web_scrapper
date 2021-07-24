@@ -1,0 +1,17 @@
+{
+  "name": "ws-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "blaucomfuig",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.10",
+    "node-fetch": "^2.6.1",
+    "puppeteer": "^10.1.0"
+  }
+}
