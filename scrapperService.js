@@ -30,6 +30,14 @@ class ScrapperService {
     await this.guestsAdultSelector(this.page, this.adults)
     await this.guestsChildrenSelector(this.page, this.children)
     await this.confirmBook(this.page)
+
+    
+  }
+
+  async grabInfo(){
+    await this.book()
+    await this.waitForNewURL(this.page)
+    await this.grabDateIn(this.page)
   }
 
   async checkInSelector(page, dateIn){
@@ -64,37 +72,38 @@ class ScrapperService {
     );
     await button.click();
   }
+
+  async waitForNewURL(page){
+    await page.waitForTimeout(2000)
+  }
+
+  async grabDateIn(page){
+    
+    const [dateIn] = await page.$x('//*[@id="applicationHost"]/div/div[2]/div[1]/header/div[1]/p/span[2]')
+    const dateInProp = await dateIn.getProperty('textContent')
+    const dateInTxt = await dateInProp.jsonValue()
+    console.log(dateInTxt)
+  }
   
 }
 
 let request = new ScrapperService("https://www.secure-hotel-booking.com/smart/Star-Champs-Elysees/2YXB/en/", "26 Jan 2022", "30 Jan 2022", "2", "1")
-request.book()
+request.grabInfo()
 
  
-  // const bookData = {}
-
-
-
-  // const book = async (url) => {
-    
   
-
     
   
   //   await grabInfo()
    
-  // };
-
   
 
   // const grabInfo = async() => {
   //   await page.waitForSelector('p.filters span.filters-date')
   //   await page.waitForTimeout(2000)
 
-  //     const [dateIn] = await page.$x('//*[@id="applicationHost"]/div/div[2]/div[1]/header/div[1]/p/span[2]')
-  //     const dateInProp = await dateIn.getProperty('textContent')
-  //     const dateInTxt = await dateInProp.jsonValue()
-  //     bookData.dateCheckIn = dateInTxt
+     
+      // bookData.dateCheckIn = dateInTxt
 
   //     const [dateOut] = await page.$x('//*[@id="applicationHost"]/div/div[2]/div[1]/header/div[1]/p/span[3]')
   //     const dateOutProp = await dateOut.getProperty('textContent')
