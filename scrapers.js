@@ -9,14 +9,23 @@ const getData = async () => {
     array.push(data);
 
     template.innerHTML = `
-        <p>Date of check-in: ${array[0].dateCheckIn} </p>
-        <p>Date of check-out: ${array[0].dateCheckOut} </p>
-        <p>Number of guests: ${array[0].totalGuests} </p>
-        <p>Adults: ${array[0].numAdults} </p>
-        <p>Children: ${array[0].numChild}</p>
-        <p>Lowest price:${array[0].lowestPrice} </p>
-        <p>Type of currency:${array[0].currencyISO} </p>
-        <p>User language:${array[0].browserLanguage} </p>
+        <div class="list-info">
+            <div class="column-1">
+                <p class="item-title">Date of check-in: <span class="item-info">${array[0].dateCheckIn}</span> </p>
+                <p class="item-title">Date of check-out: <span class="item-info">${array[0].dateCheckOut}</span> </p>
+                <p class="item-title">Number of guests: <span  class="item-info">${array[0].totalGuests}</span> </p>
+                <p class="item-title">Adults: <span class="item-info">${array[0].numAdults}</span> </p>
+            </div>
+            <div class="column-2">
+                <p class="item-title">Children: <span class="item-info">${array[0].numChild}</span> </p>
+                <p class="item-title">Lowest price: <span class="item-info">${array[0].lowestPrice}</span> </p>
+                <p class="item-title">Type of currency: <span class="item-info">${array[0].currencyISO}</span> </p>
+                <p class="item-title">User language: <span class="item-info">${array[0].browserLanguage}</span> </p>
+            </div>
+            
+            
+           
+        </div>
     `
 
   } catch (error) {
