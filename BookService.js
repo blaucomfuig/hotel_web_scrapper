@@ -11,11 +11,17 @@ export class BookService {
     this.page = null;
   }
   async loadWebsite() {
-    const browser = await puppeteer.launch({ headless: false });
-    const page = await browser.newPage();
-    await page.goto(this.url);
-    this.page = page;
-    this.browser = browser;
+    try{
+      const browser = await puppeteer.launch({ headless: false });
+      const page = await browser.newPage();
+      await page.goto(this.url);
+      this.page = page;
+      this.browser = browser;
+      
+    } catch(error){
+      console.log(error)
+    }
+   
   }
 
   setPage(page) {
@@ -25,23 +31,27 @@ export class BookService {
   async book() {
     try {
       await this.loadWebsite();
-     
       await this.checkInSelector(this.page, this.dateIn);
       await this.checkOutSelector(this.page, this.dateOut);
       await this.guestsAdultSelector(this.page, this.adults);
       await this.guestsChildrenSelector(this.page, this.children);
       await this.confirmBook(this.page);
     } catch (error) {
-      console.log(error);
+      console.log("Ops ! It seems it is not the right URL");
+      this.browser.close()
+      return
     }
   }
 
   async checkInSelector(page, dateIn) {
-    await page.waitForSelector("input.check-in-datepicker");
+  
+      await page.waitForSelector("input.check-in-datepicker");
     await page.waitForSelector("input.check-out-datepicker");
     await page.focus("input.check-in-datepicker");
     await page.keyboard.type(dateIn, { delay: 100 });
     await page.keyboard.press("Enter");
+   
+    
   }
 
   async checkOutSelector(page, dateOut) {

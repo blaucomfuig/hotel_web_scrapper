@@ -20,9 +20,11 @@ class GrabInfo extends BookService {
   
 
     async grabInfo() {
+    try{
         await this.book();
         await this.waitForNewURL(this.page);
         await this.grabDateIn(this.page);
+       
         await this.grabDateOut(this.page);
         await this.grabGuestAdult(this.page);
         await this.grabGuestChildren(this.page);
@@ -31,6 +33,12 @@ class GrabInfo extends BookService {
         await this.grabCurrencyISO(this.page);
         await this.grabAllGuests(this.adults, this.children);
         await this.getBookInfo()
+    } catch(error){
+        this.browser.close()
+        console.log("Could not load the page. Try again !")
+        return
+    }
+      
     
       
     }
@@ -40,13 +48,22 @@ class GrabInfo extends BookService {
     }
   
     async grabDateIn(page) {
-      const [dateIn] = await page.$x(
-        '//*[@id="applicationHost"]/div/div[2]/div[1]/header/div[1]/p/span[2]'
-      );
-      const dateInProp = await dateIn.getProperty("textContent");
-      const dateInTxt = await dateInProp.jsonValue();
-      this.bookInfo.dateCheckIn = this.dateConverter(dateInTxt)
-      return dateInTxt
+    try{
+        await page.waitForSelector( '//*[@id="applicationHost"]/div/div[2]/div[1]/header/div[1]/p/span[2]').catch(error => {console.log('There are no rooms available')})
+        const [dateIn] = await page.$x(
+            '//*[@id="applicationHost"]/div/div[2]/div[1]/header/div[1]/p/span[2]'
+          );
+          const dateInProp = await dateIn.getProperty("textContent");
+          const dateInTxt = await dateInProp.jsonValue();
+          this.bookInfo.dateCheckIn = this.dateConverter(dateInTxt)
+          return dateInTxt
+    } catch(error){
+        this.browser.close()
+        
+    }
+        
+    
+     
     }
   
     async grabDateOut(page) {
@@ -127,7 +144,7 @@ class GrabInfo extends BookService {
     async grabCurrencyISO(page) {
       const currencyISO = await page.evaluate(() => {
         let currencySymbols = {
-          $: "USD", // US Dollar
+          "$": "USD", // US Dollar
           "€": "EUR", // Euro
           "£": "GBP", // British Pound Sterling
           "¥": "JPY", // Japanese Yen
@@ -176,9 +193,9 @@ class GrabInfo extends BookService {
   }
   
 let request = new GrabInfo(
-    "https://www.secure-hotel-booking.com/smart/Star-Champs-Elysees/2YXB/en/",
-    "26 Jan 2022",
-    "30 Jan 2022",
+    "https://www.pantarei.cat/",
+    "26 Oct 2022",
+    "30 Oct 2022",
     "2",
     "1"
   );
