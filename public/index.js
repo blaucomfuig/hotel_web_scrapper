@@ -9,9 +9,12 @@ const getData = async () => {
     array.push(data);
 
     if(array[0].msgError !== null){
+      document.getElementById('body').style.backgroundColor = "rgb(246, 217, 212)";
+      document.getElementById('app').style.backgroundColor = "rgb(255, 127, 127)"
+      
       return template.innerHTML = `
-        <div class="list-info">
-          <h1>${array[0].msgError}</h1>
+        <div class="error-container">
+          <p class="error-message">${array[0].msgError}</p>
         </div>
 
       `

@@ -15,14 +15,15 @@ class GrabInfo extends BookService {
         lowestPrice: null,
         currencyISO: null,
         browserLanguage: null,
-        msgError: null
+        msgError: null,
+        msgErrorUrl: null
       };
     }
   
 
     async grabInfo() {
     try{
-        await this.book();
+        await this.book()
         await this.waitForNewURL(this.page);
         await this.grabDateIn(this.page);
        
@@ -50,7 +51,7 @@ class GrabInfo extends BookService {
   
     async grabDateIn(page) {
     try{
-        await page.waitForSelector( '//*[@id="applicationHost"]/div/div[2]/div[1]/header/div[1]/p/span[2]').catch(error => {this.bookInfo.msgError = 'There are no rooms available for the selected dates'; this.getBookInfo(); this.bookInfo.msgError = null; console.log('There are no rooms available for the selected dates');  })
+        await page.waitForSelector( '//*[@id="applicationHost"]/div/div[2]/div[1]/header/div[1]/p/span[2]').catch(error => {this.bookInfo.msgError = 'Sorry, there are no rooms available for the selected dates'; this.getBookInfo(); this.bookInfo.msgError = null; console.log('Sorry, there are no rooms available for the selected dates');  })
         const [dateIn] = await page.$x(
             '//*[@id="applicationHost"]/div/div[2]/div[1]/header/div[1]/p/span[2]'
           );
@@ -197,7 +198,7 @@ class GrabInfo extends BookService {
 let request = new GrabInfo(
     "https://www.secure-hotel-booking.com/smart/Star-Champs-Elysees/2YXB/en/",
     "26 Jan 2022",
-    "29 Jan 2022",
+    "30 Jan 2022",
     "2",
     "1"
   );

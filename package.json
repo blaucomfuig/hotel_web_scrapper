@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "bot.js",
+  "directories": {
+    "test": "tests"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "blaucomfuig",
   "license": "ISC",
@@ -12,7 +15,16 @@
   "dependencies": {
     "bootstrap-icons": "^1.5.0",
     "cheerio": "^1.0.0-rc.10",
+    "jest-environment-puppeteer": "^5.0.4",
     "node-fetch": "^2.6.1",
     "puppeteer": "^10.1.0"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6"
+  },
+  "jest": {
+    "globalSetup": "jest-environment-puppeteer/setup",
+    "globalTeardown": "jest-environment-puppeteer/teardown",
+    "testEnvironment": "jest-environment-puppeteer"
   }
 }

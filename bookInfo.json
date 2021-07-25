@@ -1,11 +1,12 @@
 {
   "dateCheckIn": "2022-1-26",
-  "dateCheckOut": "2022-1-29",
+  "dateCheckOut": "2022-1-30",
   "numAdults": 2,
   "numChild": 1,
   "totalGuests": 3,
-  "lowestPrice": 88,
+  "lowestPrice": 87,
   "currencyISO": "EUR",
   "browserLanguage": "en",
-  "msgError": null
+  "msgError": null,
+  "msgErrorUrl": null
 }

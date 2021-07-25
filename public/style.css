@@ -8,6 +8,7 @@ body {
     width: 100vw;
     height: 100vh;
     background-color:rgb(225, 246, 212);
+
 }
 
 .app{
@@ -20,6 +21,7 @@ body {
     filter: drop-shadow(1px 1px 10px gray );
     border-radius: 10px;
 
+
 }
 
 .list-info{
@@ -27,8 +29,22 @@ body {
     display: flex;
     justify-content: space-around;
     height: 100%;
-   
 
+}
+
+.error-container{
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 0 3rem;
+}
+
+.error-message{
+    text-align: center;
+    line-height: 3rem;
+    font-size: 2rem;
+    font-weight: 200;
 }
 
 .column-1{
