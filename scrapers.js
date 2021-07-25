@@ -1,11 +1,5 @@
-let ctnCheckIn = document.getElementById("checkIn");
-let ctnCheckOut = document.getElementById("checkOut");
-let ctnTotalGuests = document.getElementById("totalGuests");
-let ctnAdults = document.getElementById("adults");
-let ctnChildren = document.getElementById("children");
-let ctnPrice = document.getElementById("price");
-let ctnCurrency = document.getElementById("currency");
-let ctnLanguage = document.getElementById("language");
+let template = document.getElementById("app");
+
 
 const getData = async () => {
   try {
@@ -14,17 +8,22 @@ const getData = async () => {
     const data = await res.json();
     array.push(data);
 
-    ctnCheckIn.innerHTML = array[0].dateCheckIn;
-    ctnCheckOut.innerHTML = array[0].dateCheckOut;
-    ctnTotalGuests.innerHTML = array[0].totalGuests;
-    ctnAdults.innerHTML = array[0].numAdults;
-    ctnChildren.innerHTML = array[0].numChild;
-    ctnPrice.innerHTML = array[0].bestPrice;
-    ctnCurrency.innerHTML = array[0].currencyISO;
-    ctnLanguage.innerHTML = array[0].browserLanguage;
+    template.innerHTML = `
+        <p>Date of check-in: ${array[0].dateCheckIn} </p>
+        <p>Date of check-out: ${array[0].dateCheckOut} </p>
+        <p>Number of guests: ${array[0].totalGuests} </p>
+        <p>Adults: ${array[0].numAdults} </p>
+        <p>Children: ${array[0].numChild}</p>
+        <p>Lowest price:${array[0].lowestPrice} </p>
+        <p>Type of currency:${array[0].currencyISO} </p>
+        <p>User language:${array[0].browserLanguage} </p>
+    `
+
   } catch (error) {
     console.log(error);
   }
 };
 
 getData();
+
+

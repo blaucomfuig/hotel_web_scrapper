@@ -23,12 +23,17 @@ export class BookService {
   }
 
   async book() {
-    await this.loadWebsite();
-    await this.checkInSelector(this.page, this.dateIn);
-    await this.checkOutSelector(this.page, this.dateOut);
-    await this.guestsAdultSelector(this.page, this.adults);
-    await this.guestsChildrenSelector(this.page, this.children);
-    await this.confirmBook(this.page);
+    try {
+      await this.loadWebsite();
+     
+      await this.checkInSelector(this.page, this.dateIn);
+      await this.checkOutSelector(this.page, this.dateOut);
+      await this.guestsAdultSelector(this.page, this.adults);
+      await this.guestsChildrenSelector(this.page, this.children);
+      await this.confirmBook(this.page);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async checkInSelector(page, dateIn) {
@@ -62,5 +67,7 @@ export class BookService {
     );
     await button.click();
   }
+
+  
 }
 

@@ -4,6 +4,7 @@ import * as fs from "fs";
 class GrabInfo extends BookService {
     constructor(url, dateIn, dateOut, adults, children) {
       super(url, dateIn, dateOut, adults, children);
+      this.browser = null
       this.prices = null;
       this.bookInfo = {
         dateCheckIn: null,
@@ -17,20 +18,20 @@ class GrabInfo extends BookService {
       };
     }
   
-  
-  
+
     async grabInfo() {
-      await this.book();
-      await this.waitForNewURL(this.page);
-      await this.grabDateIn(this.page);
-      await this.grabDateOut(this.page);
-      await this.grabGuestAdult(this.page);
-      await this.grabGuestChildren(this.page);
-      await this.grabUserLanguage(this.page);
-      await this.grabLowestPrice(this.page);
-      await this.grabCurrencyISO(this.page);
-      await this.grabAllGuests(this.adults, this.children);
-      await this.getBookInfo()
+        await this.book();
+        await this.waitForNewURL(this.page);
+        await this.grabDateIn(this.page);
+        await this.grabDateOut(this.page);
+        await this.grabGuestAdult(this.page);
+        await this.grabGuestChildren(this.page);
+        await this.grabUserLanguage(this.page);
+        await this.grabLowestPrice(this.page);
+        await this.grabCurrencyISO(this.page);
+        await this.grabAllGuests(this.adults, this.children);
+        await this.getBookInfo()
+    
       
     }
   
@@ -44,7 +45,7 @@ class GrabInfo extends BookService {
       );
       const dateInProp = await dateIn.getProperty("textContent");
       const dateInTxt = await dateInProp.jsonValue();
-      this.bookInfo.dateCheckIn = dateInTxt
+      this.bookInfo.dateCheckIn = this.dateConverter(dateInTxt)
       return dateInTxt
     }
   
@@ -54,7 +55,7 @@ class GrabInfo extends BookService {
       );
       const dateOutProp = await dateOut.getProperty("textContent");
       const dateOutTxt = await dateOutProp.jsonValue();
-      this.bookInfo.dateCheckOut = dateOutTxt
+      this.bookInfo.dateCheckOut = this.dateConverter(dateOutTxt)
       return dateOutTxt
     }
   
@@ -157,6 +158,21 @@ class GrabInfo extends BookService {
       console.log(this.bookInfo)
       return this.bookInfo
     }
+
+    dateConverter(date){
+        let d = new Date(date)
+        let year = d.getFullYear()
+        let monthConverter = d.getMonth()
+        let month = monthConverter + 1
+        let day = d.getDate()
+        
+        let fullDate = [year, month, day]
+        
+        return fullDate.join('-')
+    
+    }
+
+    
   }
   
 let request = new GrabInfo(
