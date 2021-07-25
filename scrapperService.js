@@ -30,14 +30,6 @@ class ScrapperService {
     await this.guestsAdultSelector(this.page, this.adults)
     await this.guestsChildrenSelector(this.page, this.children)
     await this.confirmBook(this.page)
-
-    
-  }
-
-  async grabInfo(){
-    await this.book()
-    await this.waitForNewURL(this.page)
-    await this.grabDateIn(this.page)
   }
 
   async checkInSelector(page, dateIn){
@@ -73,122 +65,132 @@ class ScrapperService {
     await button.click();
   }
 
+}
+
+class GrabInfo extends ScrapperService {
+  constructor(url, dateIn, dateOut, adults, children){
+    super(url, dateIn, dateOut, adults, children)
+    this.prices = null
+  }
+
+  async grabInfo(){
+    await this.book()
+    await this.waitForNewURL(this.page)
+    await this.grabDateIn(this.page)
+    await this.grabDateOut(this.page)
+    await this.grabGuestAdult(this.page)
+    await this.grabGuestChildren(this.page)
+    await this.grabUserLanguage(this.page)
+    await this.grabLowestPrice(this.page)
+    await this.grabCurrencyISO(this.page)
+    await this.grabAllGuests(this.adults, this.children)
+  }
+
   async waitForNewURL(page){
     await page.waitForTimeout(2000)
   }
 
   async grabDateIn(page){
-    
     const [dateIn] = await page.$x('//*[@id="applicationHost"]/div/div[2]/div[1]/header/div[1]/p/span[2]')
     const dateInProp = await dateIn.getProperty('textContent')
     const dateInTxt = await dateInProp.jsonValue()
     console.log(dateInTxt)
   }
-  
+
+  async grabDateOut(page){
+    const [dateOut] = await page.$x('//*[@id="applicationHost"]/div/div[2]/div[1]/header/div[1]/p/span[3]')
+    const dateOutProp = await dateOut.getProperty('textContent')
+    const dateOutTxt = await dateOutProp.jsonValue()
+    console.log(dateOutTxt)
+  }
+
+  async grabGuestAdult(page){
+    const [adults] = await page.$x('//*[@id="applicationHost"]/div/div[2]/div[1]/header/div[1]/p/span[4]/span[1]')
+    const adultsProp = await adults.getProperty('textContent')
+    const adultsTxt = await adultsProp.jsonValue()
+    this.adults = adultsTxt
+    console.log(adultsTxt)
+  }
+
+  async grabGuestChildren(page){
+    const [children] = await page.$x('//*[@id="applicationHost"]/div/div[2]/div[1]/header/div[1]/p/span[4]/span[4]/span[1]')
+    const childrenProp = await children.getProperty('textContent')
+    const childrenTxt = await childrenProp.jsonValue()
+    this.children = childrenTxt
+    console.log(childrenTxt)
+  }
+
+  grabAllGuests(adults, children){
+    const allGuests = parseInt(adults, 10) + parseInt(children, 10)
+    console.log(allGuests)
+  }
+
+  async grabUserLanguage(page){
+    const language = await page.evaluate(()=>{
+      const lang = document.querySelector('html').lang
+      return lang
+    })
+
+    console.log(language)
+  }
+
+  async grabLowestPrice(page){
+    const lowestPrice = await page.evaluate(() =>{
+      const allPrices = document.querySelectorAll('.room-rates-item-price-moy')
+
+      let arrayPrices = []
+        allPrices.forEach(item =>{
+          arrayPrices.push(item.innerText)
+        })
+      
+      this.prices = arrayPrices
+
+      let curatedPrices = arrayPrices
+      .map(item =>{
+        return item.replace("€", "")
+      }).sort((a,b) =>{
+        return a - b
+      })
+
+      return curatedPrices[0]
+
+    })
+    console.log(lowestPrice)
+  }
+
+  async grabCurrencyISO(page){
+    const currencyISO = await page.evaluate(() =>{
+
+      let currencySymbols = {
+        '$':'USD', // US Dollar
+        '€':'EUR', // Euro
+        '£':'GBP', // British Pound Sterling
+        '¥':'JPY', // Japanese Yen
+      };
+
+      let currencySymbol = this.prices[0].replace(/[\d\., ]/g, '')
+
+      let symbols = Object.keys(currencySymbols)
+
+      let symbol = symbols.filter(item =>{
+        return item == currencySymbol
+      })
+
+      return currencySymbols[symbol]
+      
+
+    })
+
+    console.log(currencyISO)
+  }
 }
 
-let request = new ScrapperService("https://www.secure-hotel-booking.com/smart/Star-Champs-Elysees/2YXB/en/", "26 Jan 2022", "30 Jan 2022", "2", "1")
+let request = new GrabInfo("https://www.secure-hotel-booking.com/smart/Star-Champs-Elysees/2YXB/en/", "26 Jan 2022", "30 Jan 2022", "2", "1")
 request.grabInfo()
 
+      
+
  
-  
-    
-  
-  //   await grabInfo()
-   
-  
-
-  // const grabInfo = async() => {
-  //   await page.waitForSelector('p.filters span.filters-date')
-  //   await page.waitForTimeout(2000)
-
-     
-      // bookData.dateCheckIn = dateInTxt
-
-  //     const [dateOut] = await page.$x('//*[@id="applicationHost"]/div/div[2]/div[1]/header/div[1]/p/span[3]')
-  //     const dateOutProp = await dateOut.getProperty('textContent')
-  //     const dateOutTxt = await dateOutProp.jsonValue()
-  //     bookData.dateCheckOut = dateOutTxt
-
-  //     const [adults] = await page.$x('//*[@id="applicationHost"]/div/div[2]/div[1]/header/div[1]/p/span[4]/span[1]')
-  //     const adultsProp = await adults.getProperty('textContent')
-  //     const adultsTxt = await adultsProp.jsonValue()
-  //     bookData.numAdults = adultsTxt
-
-  //     const [children] = await page.$x('//*[@id="applicationHost"]/div/div[2]/div[1]/header/div[1]/p/span[4]/span[4]/span[1]')
-  //     const childrenProp = await children.getProperty('textContent')
-  //     const childrenTxt = await childrenProp.jsonValue()
-  //     bookData.numChild = childrenTxt
-
-  //     const language = await page.evaluate(()=>{
-  //       const lang = document.querySelector('html').lang
-  //       return lang
-  //     })
-
-  //     const prices = await page.evaluate(() =>{
-  //       const allPrices = document.querySelectorAll('.room-rates-item-price-moy')
-
-  //       let arrayPrices = []
-  //       allPrices.forEach(item =>{
-  //         arrayPrices.push(item.innerText)
-  //       })
-
-  //       let curatedPrices = arrayPrices.map(item =>{
-  //         return item.replace("€", "")
-  //       })
-
-      
-  //       return curatedPrices.sort((a,b) =>{
-  //         return a - b
-  //       })
-
-     
-  //     })
-
-  //     const currencyISO = await page.evaluate(() =>{
-
-  //       let currencySymbols = {
-  //         '$':'USD', // US Dollar
-  //         '€':'EUR', // Euro
-  //         '£':'GBP', // British Pound Sterling
-  //         '¥':'JPY', // Japanese Yen
-  //       };
-
-  //       const allPrices = document.querySelectorAll('.room-rates-item-price-moy')
-
-  //       let arrayPrices = []
-  //       allPrices.forEach(item =>{
-  //         arrayPrices.push(item.innerText)
-  //       })
-
-  //       let currencySymbol = arrayPrices[0].replace(/[\d\., ]/g, '')
-
-  //       let symbols = Object.keys(currencySymbols)
-
-        
-  //       let symbol = symbols.filter(item =>{
-  //         return item == currencySymbol
-  //       })
-
-  //       return currencySymbols[symbol]
-        
-  
-  //     })
-
-      
-  //     const totalGuests = (adults, children) =>{
-
-
-  //       return parseInt(adults, 10) + parseInt(children, 10)
-  //     }
-
-  //     bookData.totalGuests = totalGuests(adultsTxt, childrenTxt)
-  //     bookData.bestPrice = parseInt(prices[0])
-  //     bookData.currencyISO = currencyISO
-  //     bookData.browserLanguage = language
-      
-
-
   //     let prepareJson = JSON.stringify(bookData, null, 2)
   //     fs.writeFile("bookInfo.json", prepareJson, function(err) {
   //       if(err){
@@ -200,8 +202,3 @@ request.grabInfo()
 
   // }
   
-
-  // await book("https://www.secure-hotel-booking.com/smart/Star-Champs-Elysees/2YXB/en/")
-
- 
-
