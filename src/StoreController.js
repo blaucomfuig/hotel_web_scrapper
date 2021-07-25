@@ -15,6 +15,7 @@ class GrabInfo extends BookService {
         lowestPrice: null,
         currencyISO: null,
         browserLanguage: null,
+        msgError: null
       };
     }
   
@@ -49,7 +50,7 @@ class GrabInfo extends BookService {
   
     async grabDateIn(page) {
     try{
-        await page.waitForSelector( '//*[@id="applicationHost"]/div/div[2]/div[1]/header/div[1]/p/span[2]').catch(error => {console.log('There are no rooms available')})
+        await page.waitForSelector( '//*[@id="applicationHost"]/div/div[2]/div[1]/header/div[1]/p/span[2]').catch(error => {this.bookInfo.msgError = 'There are no rooms available for the selected dates'; this.getBookInfo(); this.bookInfo.msgError = null; console.log('There are no rooms available for the selected dates');  })
         const [dateIn] = await page.$x(
             '//*[@id="applicationHost"]/div/div[2]/div[1]/header/div[1]/p/span[2]'
           );
@@ -173,6 +174,7 @@ class GrabInfo extends BookService {
         }
       });
       console.log(this.bookInfo)
+   
       return this.bookInfo
     }
 
@@ -193,9 +195,9 @@ class GrabInfo extends BookService {
   }
   
 let request = new GrabInfo(
-    "https://www.pantarei.cat/",
-    "26 Oct 2022",
-    "30 Oct 2022",
+    "https://www.secure-hotel-booking.com/smart/Star-Champs-Elysees/2YXB/en/",
+    "26 Jan 2022",
+    "29 Jan 2022",
     "2",
     "1"
   );

@@ -4,11 +4,21 @@ let template = document.getElementById("app");
 const getData = async () => {
   try {
     let array = [];
-    const res = await fetch("bookInfo.json");
+    const res = await fetch("../bookInfo.json");
     const data = await res.json();
     array.push(data);
 
-    template.innerHTML = `
+    if(array[0].msgError !== null){
+      return template.innerHTML = `
+        <div class="list-info">
+          <h1>${array[0].msgError}</h1>
+        </div>
+
+      `
+    }
+    
+    return template.innerHTML = `
+        
         <div class="list-info">
             <div class="column-1">
             
