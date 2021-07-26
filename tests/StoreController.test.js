@@ -18,17 +18,15 @@ describe("date converter", () => {
   });
 });
 
-//test gran user browser language
+//test gran user browser's language
 
-describe("sdasadf", () => {
+describe("get user browser's language", () => {
   beforeAll(async () => {
-      jest.setTimeout(10000)
       jest.mock('../src/StoreController.js')
       jest.mock('../src/BookService.js')
   });
 
   it("should return 'fr', which is the browser language by deafault of the french ambassade website", async() => {
-
     const service = new BookService("https://es.ambafrance.org/")
     await service.loadWebsite()
     const page = service.getPage()

@@ -46,15 +46,15 @@ export class BookService {
       await this.guestsChildrenSelector(this.page, this.children);
       await this.confirmBook(this.page);
     } catch (error) {
-      console.log("Ops ! It seems it is not the right URL");
       this.browser.close()
-      return
+      console.log("Ops ! It seems it is not the right URL")
+      return "Ops ! It seems it is not the right URL";
     }
   }
 
   async checkInSelector(page, dateIn) {
   
-    await page.waitForSelector("input.check-in-datepicker");
+    await page.waitForSelector("input.check-in-datepicker",{waitUntil: 'load', timeout: 8000});
     await page.waitForSelector("input.check-out-datepicker");
     await page.focus("input.check-in-datepicker");
     await page.keyboard.type(dateIn, { delay: 100 });
