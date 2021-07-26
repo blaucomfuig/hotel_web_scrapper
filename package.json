@@ -13,18 +13,28 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "@babel/runtime": "^7.14.8",
     "bootstrap-icons": "^1.5.0",
     "cheerio": "^1.0.0-rc.10",
     "jest-environment-puppeteer": "^5.0.4",
-    "node-fetch": "^2.6.1",
-    "puppeteer": "^10.1.0"
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
-    "jest": "^27.0.6"
+    "@babel/plugin-transform-runtime": "^7.14.5",
+    "@babel/preset-env": "^7.14.8",
+    "babel-jest": "^27.0.6",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "jest": "^27.0.6",
+    "jest-puppeteer": "^5.0.4",
+    "puppeteer": "^9.1.1"
   },
   "jest": {
     "globalSetup": "jest-environment-puppeteer/setup",
     "globalTeardown": "jest-environment-puppeteer/teardown",
-    "testEnvironment": "jest-environment-puppeteer"
+    "testEnvironment": "jest-environment-puppeteer",
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    },
+    "preset": "jest-puppeteer"
   }
 }

@@ -194,13 +194,15 @@ class GrabInfo extends BookService {
 
     
   }
+
+export default GrabInfo
   
-let request = new GrabInfo(
-    "https://www.secure-hotel-booking.com/smart/Star-Champs-Elysees/2YXB/en/",
-    "26 Jan 2022",
-    "30 Jan 2022",
-    "2",
-    "1"
-  );
+// let request = new GrabInfo(
+//     "https://www.secure-hotel-booking.com/smart/Star-Champs-Elysees/2YXB/en/",
+//     "20 Jan 2022",
+//     "25 Jan 2022",
+//     "2",
+//     "1"
+//   );
   
-request.grabInfo()
+// request.grabInfo()
