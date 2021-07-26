@@ -1,7 +1,7 @@
 # Hotel Web Scrapper
 
 <div style="width: 100vw;">
-    <img style="width: 100%; height: 100%;" src="./src/img/bookRequest_success.png" />
+    <img style="width: 100%; height: 100%;" src="./src/img/bookRequest.png" />
 </div>
 <div style="width: 100vw;">
     <img style="width: 100%; height: 100%;" src="./src/img/grabInfo_success.png" />
