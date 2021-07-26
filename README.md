@@ -22,7 +22,7 @@ A simple view template, created with HTML and CSS, has been enabled for better v
 
 ### Challenges :fire:
 
-#### From Spaghetti to OOP
+#### 1. From Spaghetti to OOP
 
 Besides the struggle I experienced the first two days while I was getting used to puppeteer syntax and logic, the real challenge was yet to come later. Once I succeeded in making the desired request to scrap de webpage, I was facing a monstruous and incomprehensible code. 
 
@@ -32,7 +32,7 @@ This task took me two more days to accomplish it. But the result was worth the e
 
 I have not removed the first spaghetti version of my code, so that you can compare both of them. "Room237.js" is the one you should avoid, "BookService.js" and "StoreControler.js" are the OOP version, much more comprehensible, readable and testable.
 
-#### Testing async functions
+#### 2. Testing async functions
 
 The second big challenge was to pass the tests. Requests made by puppeteer to scrap the web are essentially asynchronous functions. I have never worked testing async methods, much less if they are part of classes. However, I succeeded in passing two unit tests. 
 
