@@ -1,7 +1,7 @@
 # Hotel Web Scrapper
 
 <div style="width: 100vw;">
-    <img style="width: 100%; height: 100%;" src="./src/img/grabInfo_success/png" />
+    <img style="width: 100%; height: 100%;" src="./src/img/grabInfo_success.png" />
 </div>
 
 ### Description
@@ -14,7 +14,7 @@ A simple view template, created with HTML and CSS, has been enabled for better v
 
 ### Challenges
 
-##### From Spaghetti to OOP
+#### From Spaghetti to OOP
 Besides the struggle I experienced the first two days while I was getting used to puppeteer syntax and logic, the real challenge was yet to come later. Once I succeeded in making the desired request to scrap de webpage, I was facing a monstruous and incomprehensible code. 
 
 Keeping in mind that we write code, firstly and before anything, for other humans, it was clear that something had to be done. I am quite a fan of Object Oriented Programming paradigm, since it allows to apply SOLID principles in an easier way, and also to make a more testeable and maintainable code.
