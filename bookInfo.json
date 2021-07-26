@@ -1,12 +1,12 @@
 {
-  "dateCheckIn": "2022-1-26",
-  "dateCheckOut": "2022-1-29",
-  "numAdults": 2,
-  "numChild": 1,
-  "totalGuests": 3,
-  "lowestPrice": 88,
-  "currencyISO": "EUR",
-  "browserLanguage": "en",
-  "msgError": null,
+  "dateCheckIn": null,
+  "dateCheckOut": null,
+  "numAdults": null,
+  "numChild": null,
+  "totalGuests": null,
+  "lowestPrice": null,
+  "currencyISO": null,
+  "browserLanguage": null,
+  "msgError": "Sorry, there are no rooms available for the selected dates",
   "msgErrorUrl": null
 }

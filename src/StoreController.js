@@ -200,8 +200,8 @@ export default GrabInfo
   
 let request = new GrabInfo(
     "https://www.secure-hotel-booking.com/smart/Star-Champs-Elysees/2YXB/en/",
-    "26 Jan 2022",
-    "29 Jan 2022",
+    "02 Feb 2022",
+    "05 Feb 2022",
     "2",
     "1"
   );
