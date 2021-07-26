@@ -35,6 +35,7 @@
     "transform": {
       "^.+\\.jsx?$": "babel-jest"
     },
-    "preset": "jest-puppeteer"
+    "preset": "jest-puppeteer",
+    "testTimeout": 10000
   }
 }

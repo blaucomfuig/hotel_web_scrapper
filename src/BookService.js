@@ -17,11 +17,20 @@ export class BookService {
       await page.goto(this.url);
       this.page = page;
       this.browser = browser;
+   
       
     } catch(error){
       console.log(error)
     }
    
+  }
+
+  getPage(){
+    return this.page
+  }
+
+  getBrowser(){
+    return this.browser
   }
 
   setPage(page) {
@@ -45,7 +54,7 @@ export class BookService {
 
   async checkInSelector(page, dateIn) {
   
-      await page.waitForSelector("input.check-in-datepicker");
+    await page.waitForSelector("input.check-in-datepicker");
     await page.waitForSelector("input.check-out-datepicker");
     await page.focus("input.check-in-datepicker");
     await page.keyboard.type(dateIn, { delay: 100 });
@@ -80,4 +89,6 @@ export class BookService {
 
   
 }
+
+export default BookService
 
